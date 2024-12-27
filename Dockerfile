@@ -2,7 +2,7 @@
 # Dockerfile for https://hub.docker.com/r/mariusbegby/cadence/
 # Images automatically published: docker pull mariusbegby/cadence
 
-ARG NODE_VERSION=20.12
+ARG NODE_VERSION=22.12
 
 # Use Node.js image as the base image
 FROM node:${NODE_VERSION}-bookworm-slim
