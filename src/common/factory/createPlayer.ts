@@ -2,8 +2,8 @@ import config from 'config';
 import { type IPRotationConfig, Player } from 'discord-player';
 import { loggerService, type Logger } from '../services/logger';
 import type { CreatePlayerParams } from '../../types/playerTypes';
-import { YoutubeiExtractor } from 'discord-player-youtubei';
-
+// import { YoutubeiExtractor } from 'discord-player-youtubei';
+import { DeezerExtractor } from "discord-player-deezer"
 export const createPlayer = async ({ client, executionId }: CreatePlayerParams): Promise<Player> => {
     const logger: Logger = loggerService.child({
         module: 'utilFactory',
@@ -31,6 +31,7 @@ export const createPlayer = async ({ client, executionId }: CreatePlayerParams):
         }
 
         // Testing out new youtube extractor
+	/*
         await player.extractors.register(YoutubeiExtractor, {
             authentication: process.env.YT_EXTRACTOR_AUTH || '',
             streamOptions: {
@@ -38,7 +39,11 @@ export const createPlayer = async ({ client, executionId }: CreatePlayerParams):
                 highWaterMark: 2 * 1_024 * 1_024 // 2MB, default is 512 KB (512 * 1_024)
             }
         });
+	*/
 
+	await player.extractors.register(DeezerExtractor, {
+	    decryptionKey: "g4el58wc0zvf9na1"
+	})
         // make player accessible from anywhere in the application
         // primarily to be able to use it in broadcastEval and other sharding methods
         // @ts-ignore
@@ -52,4 +57,4 @@ export const createPlayer = async ({ client, executionId }: CreatePlayerParams):
         logger.error(error, 'Failed to create discord-player player');
         throw error;
     }
-};
+};;
