@@ -4,7 +4,8 @@ import {
     EmbedBuilder,
     type InteractionResponse,
     SlashCommandBuilder,
-    SlashCommandIntegerOption
+    SlashCommandIntegerOption,
+    MessageFlags
 } from 'discord.js';
 import type { Logger } from '../../common/services/logger';
 import { BaseSlashCommandInteraction } from '../../common/classes/interactions';
@@ -115,7 +116,7 @@ class LoopCommand extends BaseSlashCommandInteraction {
                     )
                     .setColor(this.embedOptions.colors.warning)
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 

@@ -1,5 +1,5 @@
 import config from 'config';
-import { EmbedBuilder, GuildMember, InteractionType } from 'discord.js';
+import { EmbedBuilder, GuildMember, InteractionType, MessageFlags } from 'discord.js';
 import { InteractionValidationError } from '../classes/interactions';
 import { loggerService, type Logger } from '../services/logger';
 import type { EmbedOptions } from '../../types/configTypes';
@@ -35,7 +35,7 @@ export const checkInVoiceChannel = async ({ interaction, executionId }: Validato
                         iconURL: interaction.user.avatarURL() || embedOptions.info.fallbackIconUrl
                     })
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
 
         logger.debug(`User tried to use command '${interactionIdentifier}' but was not in a voice channel.`);
@@ -82,7 +82,7 @@ export const checkSameVoiceChannel = async ({ interaction, queue, executionId }:
                         iconURL: interaction.user.avatarURL() || embedOptions.info.fallbackIconUrl
                     })
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
 
         logger.debug(`User tried to use command '${interactionIdentifier}' but was not in the same voice channel.`);

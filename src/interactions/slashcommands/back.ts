@@ -1,5 +1,5 @@
 import { type GuildQueue, type GuildQueueHistory, type Track, useHistory, useQueue } from 'discord-player';
-import { type ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { type ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, MessageFlags } from 'discord.js';
 import { BaseSlashCommandInteraction } from '../../common/classes/interactions';
 import type { BaseSlashCommandParams, BaseSlashCommandReturnType } from '../../types/interactionTypes';
 import { checkHistoryExists, checkQueueCurrentTrack } from '../../common/validation/queueValidator';
@@ -83,7 +83,7 @@ class BackCommand extends BaseSlashCommandInteraction {
                     )
                     .setColor(this.embedOptions.colors.warning)
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 
@@ -120,7 +120,7 @@ class BackCommand extends BaseSlashCommandInteraction {
                     )
                     .setColor(this.embedOptions.colors.warning)
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 

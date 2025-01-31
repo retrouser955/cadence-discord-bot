@@ -7,7 +7,8 @@ import {
     ComponentType,
     EmbedBuilder,
     type EmbedFooterData,
-    SlashCommandBuilder
+    SlashCommandBuilder,
+    MessageFlags
 } from 'discord.js';
 import type { Logger } from '../../common/services/logger';
 import { BaseSlashCommandInteraction } from '../../common/classes/interactions';
@@ -133,7 +134,7 @@ class QueueCommand extends BaseSlashCommandInteraction {
                     .setFooter(this.getDisplayFullFooterInfo(interaction, queue, translator))
                     .setColor(this.embedOptions.colors.info)
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 
@@ -159,7 +160,7 @@ class QueueCommand extends BaseSlashCommandInteraction {
                     )
                     .setColor(this.embedOptions.colors.warning)
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
         return Promise.resolve();
     }

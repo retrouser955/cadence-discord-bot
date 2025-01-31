@@ -3,6 +3,7 @@ import {
     EmbedBuilder,
     GuildMember,
     InteractionType,
+    MessageFlags,
     type TextBasedChannel,
     TextChannel,
     type VoiceBasedChannel,
@@ -49,7 +50,7 @@ export const checkVoicePermissionJoinAndTalk = async ({ interaction, executionId
                         iconURL: interaction.user.avatarURL() || embedOptions.info.fallbackIconUrl
                     })
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
 
         logger.debug(
@@ -104,7 +105,7 @@ export const checkChannelPermissionViewable = async ({ interaction, executionId 
                             iconURL: interaction.user.avatarURL() || embedOptions.info.fallbackIconUrl
                         })
                 ],
-                ephemeral: true
+                flags: MessageFlags.Ephemeral
             });
         } catch (error) {
             if (error instanceof Error) {

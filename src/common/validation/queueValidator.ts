@@ -1,5 +1,5 @@
 import config from 'config';
-import { EmbedBuilder, GuildMember, InteractionType } from 'discord.js';
+import { EmbedBuilder, GuildMember, InteractionType, MessageFlags } from 'discord.js';
 import { InteractionValidationError } from '../classes/interactions';
 import { loggerService, type Logger } from '../services/logger';
 import type { EmbedOptions } from '../../types/configTypes';
@@ -40,7 +40,7 @@ export const checkQueueExists = async ({ interaction, queue, executionId }: Vali
                         iconURL: interaction.user.avatarURL() || embedOptions.info.fallbackIconUrl
                     })
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
 
         logger.debug(`User tried to use command '${interactionIdentifier}' but there was no queue.`);
@@ -82,7 +82,7 @@ export const checkHistoryExists = async ({ interaction, history, executionId }: 
                         iconURL: interaction.user.avatarURL() || embedOptions.info.fallbackIconUrl
                     })
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
 
         logger.debug(`User tried to use command '${interactionIdentifier}' but there was no history.`);
@@ -124,7 +124,7 @@ export const checkQueueCurrentTrack = async ({ interaction, queue, executionId }
                         iconURL: interaction.user.avatarURL() || embedOptions.info.fallbackIconUrl
                     })
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
 
         logger.debug(`User tried to use command '${interactionIdentifier}' but there was no current track.`);
@@ -166,7 +166,7 @@ export const checkQueueEmpty = async ({ interaction, queue, executionId }: Valid
                         iconURL: interaction.user.avatarURL() || embedOptions.info.fallbackIconUrl
                     })
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
 
         logger.debug(`User tried to use command '${interactionIdentifier}' but there was no tracks in the queue.`);

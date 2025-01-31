@@ -1,5 +1,5 @@
 import { type GuildQueue, type GuildQueueHistory, type Track, useHistory, useQueue } from 'discord-player';
-import { EmbedBuilder, type MessageComponentInteraction } from 'discord.js';
+import { EmbedBuilder, type MessageComponentInteraction, MessageFlags } from 'discord.js';
 import { BaseComponentInteraction } from '../../common/classes/interactions';
 import type { BaseComponentParams, BaseComponentReturnType } from '../../types/interactionTypes';
 import { checkQueueCurrentTrack, checkQueueExists } from '../../common/validation/queueValidator';
@@ -68,7 +68,7 @@ class ActionPreviousButton extends BaseComponentInteraction {
                     )
                     .setColor(this.embedOptions.colors.warning)
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 
@@ -84,7 +84,7 @@ class ActionPreviousButton extends BaseComponentInteraction {
                     .setColor(this.embedOptions.colors.warning)
             ],
             components: [],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 

@@ -1,5 +1,5 @@
 import { type GuildQueue, type Track, useQueue } from 'discord-player';
-import { type ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { type ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, MessageFlags } from 'discord.js';
 import { BaseSlashCommandInteraction } from '../../common/classes/interactions';
 import type { BaseSlashCommandParams, BaseSlashCommandReturnType } from '../../types/interactionTypes';
 import { checkQueueExists } from '../../common/validation/queueValidator';
@@ -147,7 +147,7 @@ class RemoveCommand extends BaseSlashCommandInteraction {
                         )
                         .setColor(this.embedOptions.colors.warning)
                 ],
-                ephemeral: true
+                flags: MessageFlags.Ephemeral
             });
             return Promise.resolve();
         }
@@ -242,7 +242,7 @@ class RemoveCommand extends BaseSlashCommandInteraction {
                     )
                     .setColor(this.embedOptions.colors.warning)
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
         return Promise.resolve();
     }
@@ -293,7 +293,7 @@ class RemoveCommand extends BaseSlashCommandInteraction {
                     )
                     .setColor(this.embedOptions.colors.warning)
             ],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
         return Promise.resolve();
     }

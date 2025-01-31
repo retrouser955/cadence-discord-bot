@@ -10,6 +10,7 @@ export const handleCommand = async (
     executionId: string,
     interactionIdentifier: string
 ) => {
+    if(!interaction.inCachedGuild()) return;
     const logger: Logger = loggerService.child({
         module: 'handler',
         name: 'interactionCommandHandler',
@@ -27,5 +28,7 @@ export const handleCommand = async (
     }
 
     logger.debug(`Executing slash command interaction '${interactionIdentifier}'.`);
-    await slashCommand.execute({ interaction, client, executionId });
+    await player.context.provide({ guild: interaction.guild }, async () => {
+        await slashCommand.execute({ interaction, client, executionId });
+    })
 };

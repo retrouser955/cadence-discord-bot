@@ -1,5 +1,5 @@
 import { type GuildQueue, type Track, useQueue } from 'discord-player';
-import { EmbedBuilder, type MessageComponentInteraction } from 'discord.js';
+import { EmbedBuilder, type MessageComponentInteraction, MessageFlags } from 'discord.js';
 import { BaseComponentInteraction } from '../../common/classes/interactions';
 import type { BaseComponentParams, BaseComponentReturnType } from '../../types/interactionTypes';
 import { checkQueueCurrentTrack, checkQueueExists } from '../../common/validation/queueValidator';
@@ -55,7 +55,7 @@ class ActionPauseResumeButton extends BaseComponentInteraction {
                     .setColor(this.embedOptions.colors.warning)
             ],
             components: [],
-            ephemeral: true
+            flags: MessageFlags.Ephemeral
         });
     }
 

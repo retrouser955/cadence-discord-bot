@@ -9,6 +9,7 @@ export const handleAutocomplete = async (
     executionId: string,
     interactionIdentifier: string
 ) => {
+    if(!interaction.inCachedGuild()) return
     // TODO: Define TS Type for handlers, and require logger constant?
     const logger: Logger = loggerService.child({
         module: 'handler',
@@ -25,5 +26,7 @@ export const handleAutocomplete = async (
     }
 
     logger.debug(`Executing autocomplete interaction '${interactionIdentifier}'.`);
-    await autocomplete.execute({ interaction, executionId });
+    player.context.provide({ guild: interaction.guild }, async () => {
+        await autocomplete.execute({ interaction, executionId });
+    })
 };
