@@ -43,13 +43,13 @@ export async function fetchTotalGuildStatistics(client?: Client) {
     return { totalGuildCount, totalMemberCount };
 }
 
-async function fetchPlayerStatisticsPerShard(client?: Client): Promise<PlayerStatistics[]> {
+async function fetchPlayerStatisticsPerShard(client?: Client): Promise<ReturnType<typeof player.generateStatistics>[]> {
     if (!client || !client.shard) {
         throw new Error('Client is undefined or not sharded.');
     }
 
     try {
-        const playerStatisticsPerShard: PlayerStatistics[] = await client.shard.broadcastEval(() => {
+        const playerStatisticsPerShard: ReturnType<typeof player.generateStatistics>[] = await client.shard.broadcastEval(() => {
             return player.generateStatistics();
         });
         return playerStatisticsPerShard;
@@ -58,7 +58,7 @@ async function fetchPlayerStatisticsPerShard(client?: Client): Promise<PlayerSta
     }
 }
 
-function calculateTotalPlayerStatisticsForShard(result: PlayerStatistics): ShardPlayerStatistics {
+function calculateTotalPlayerStatisticsForShard(result: ReturnType<typeof player.generateStatistics>): ShardPlayerStatistics {
     const totalVoiceConnections = result.queues.length;
     let totalTracksInQueues = 0;
     let totalListeners = 0;
@@ -71,9 +71,9 @@ function calculateTotalPlayerStatisticsForShard(result: PlayerStatistics): Shard
     return { totalVoiceConnections, totalTracksInQueues, totalListeners };
 }
 
-function calculateTotalPlayerStatisticsForAllShards(results: PlayerStatistics[]): ShardPlayerStatistics {
+function calculateTotalPlayerStatisticsForAllShards(results: ReturnType<typeof player.generateStatistics>[]): ShardPlayerStatistics {
     return results.reduce(
-        (totals: ShardPlayerStatistics, result: PlayerStatistics) => {
+        (totals: ShardPlayerStatistics, result: ReturnType<typeof player.generateStatistics>) => {
             const { totalVoiceConnections, totalTracksInQueues, totalListeners } =
                 calculateTotalPlayerStatisticsForShard(result);
             totals.totalVoiceConnections += totalVoiceConnections;
@@ -87,6 +87,6 @@ function calculateTotalPlayerStatisticsForAllShards(results: PlayerStatistics[])
 }
 
 export async function fetchTotalPlayerStatistics(client?: Client): Promise<ShardPlayerStatistics> {
-    const results: PlayerStatistics[] = await fetchPlayerStatisticsPerShard(client);
+    const results = await fetchPlayerStatisticsPerShard(client);
     return calculateTotalPlayerStatisticsForAllShards(results);
 }

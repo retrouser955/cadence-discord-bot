@@ -1,5 +1,4 @@
-import { type LyricsData, lyricsExtractor } from '@discord-player/extractor';
-import { type Player, type SearchResult, useMainPlayer } from 'discord-player';
+import { LrcSearchResult, type Player, type SearchResult, useMainPlayer } from 'discord-player';
 import type { ApplicationCommandOptionChoiceData } from 'discord.js';
 import type { Logger } from '../../common/services/logger';
 import { BaseAutocompleteInteraction } from '../../common/classes/interactions';
@@ -48,8 +47,9 @@ class LyricsAutocomplete extends BaseAutocompleteInteraction {
         logger: Logger,
         translator: Translator
     ): Promise<ApplicationCommandOptionChoiceData<string>[]> {
-        const genius = lyricsExtractor();
-        const lyricsResult: LyricsData = (await genius.search(query).catch(() => null)) as LyricsData;
+        const lyricsResult = await player.lyrics.search({
+            q: query
+        }).catch(() => null)
 
         if (lyricsResult) {
             return this.getAutocompleteChoicesFromLyricsResult(lyricsResult, translator);
@@ -74,22 +74,16 @@ class LyricsAutocomplete extends BaseAutocompleteInteraction {
     }
 
     private getAutocompleteChoicesFromLyricsResult(
-        lyricsResult: LyricsData,
+        lyricsResult: LrcSearchResult[],
         translator: Translator
     ): ApplicationCommandOptionChoiceData<string>[] {
-        return [
-            {
-                name: this.getLyricsResultName(lyricsResult, translator),
-                value: lyricsResult.title.slice(0, 100)
-            }
-        ];
-    }
-
-    private getLyricsResultName(lyricsResult: LyricsData, translator: Translator): string {
-        return translator('commands.lyrics.autocompleteSearchResult', {
-            title: lyricsResult.title,
-            artist: lyricsResult.artist.name
-        });
+        return lyricsResult.map((v) => ({
+            name: translator("commands.lyrics.autocompleteSearchResult", {
+                title: v.name,
+                artist: v.artistName
+            }),
+            value: v.id.toString()
+        }));
     }
 
     private updateRecentQuery(
