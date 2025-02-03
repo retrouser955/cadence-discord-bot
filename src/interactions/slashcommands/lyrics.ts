@@ -55,7 +55,7 @@ class LyricsCommand extends BaseSlashCommandInteraction {
 
             if(!lyrics[0]) return this.sendNotFoundEmbed(interaction, searchQuery);
 
-            this.sendLyricsEmbed(interaction, lyrics[0].plainLyrics, searchQuery);
+            return this.sendLyricsEmbed(interaction, lyrics[0].plainLyrics, searchQuery);
         }
 
         await interaction.deferReply();
