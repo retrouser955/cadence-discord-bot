@@ -39,10 +39,10 @@ export const createPlayer = async ({ client, executionId }: CreatePlayerParams):
 	*/
 
 	    await player.extractors.register(DeezerExtractor, {
-	        decryptionKey: "g4el58wc0zvf9na1"
-	    })
+	        decryptionKey: process.env.DEEZER_KEY
+	    });
 
-        await player.extractors.loadMulti(DefaultExtractors)
+        await player.extractors.loadMulti(DefaultExtractors);
         
         // make player accessible from anywhere in the application
         // primarily to be able to use it in broadcastEval and other sharding methods

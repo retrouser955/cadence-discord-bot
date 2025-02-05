@@ -5,6 +5,7 @@ import { getTrackName, isQueryTooShort, shouldUseLastQuery } from '../../common/
 import type { BaseAutocompleteParams, BaseAutocompleteReturnType, RecentQuery } from '../../types/interactionTypes';
 import { useUserTranslator, type Translator } from '../../common/utils/localeUtil';
 import { transformQuery } from '../../common/validation/searchQueryValidator';
+import { isUrl } from 'discord-player-deezer';
 
 class PlayAutocomplete extends BaseAutocompleteInteraction {
     private recentQueries = new Map<string, RecentQuery>();
@@ -54,7 +55,7 @@ class PlayAutocomplete extends BaseAutocompleteInteraction {
         translator: Translator
     ): Promise<ApplicationCommandOptionChoiceData<string>[]> {
         const player: Player = useMainPlayer()!;
-        const searchResults: SearchResult = await player.search(query);
+        const searchResults: SearchResult = await player.search(isUrl(query) ? query : `deezer:${query}`);
         return searchResults.tracks.slice(0, 5).map((track) => ({
             name: getTrackName(track, translator),
             value: track.url.length > 100 ? `${track.author} - ${track.title}`.slice(0, 100) : track.url

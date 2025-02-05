@@ -53,7 +53,7 @@ class LyricsCommand extends BaseSlashCommandInteraction {
                 q: searchQuery
             });
 
-            if(!lyrics[0]) return this.sendNotFoundEmbed(interaction, searchQuery);
+            if(!lyrics[0]) return this.sendNotFoundEmbed(interaction, `${nowPlaying.author} - ${nowPlaying.title}`);
 
             return this.sendLyricsEmbed(interaction, lyrics[0].plainLyrics, searchQuery);
         }
@@ -81,7 +81,7 @@ class LyricsCommand extends BaseSlashCommandInteraction {
     private sendNotFoundEmbed(ctx: ChatInputCommandInteraction, query: string) {
         const embed = new EmbedBuilder()
         .setTitle("No results found")
-        .setColor("Red")
+        .setColor(this.embedOptions.colors.error)
         .setDescription(`No lyrics were found for \`${query}\``)
 
         ctx.followUp({
@@ -92,7 +92,7 @@ class LyricsCommand extends BaseSlashCommandInteraction {
     private sendLyricsEmbed(ctx: ChatInputCommandInteraction, lyrics: string, query: string) {
         const embed = new EmbedBuilder()
         .setTitle(query)
-        .setColor("Blue");
+        .setColor(this.embedOptions.colors.info);
 
         if(lyrics.length > 4096) lyrics = `${lyrics.substring(0, 4093)}...`;
 
