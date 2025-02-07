@@ -55,7 +55,7 @@ class LyricsCommand extends BaseSlashCommandInteraction {
 
             if(!lyrics[0]) return this.sendNotFoundEmbed(interaction, `${nowPlaying.author} - ${nowPlaying.title}`);
 
-            return this.sendLyricsEmbed(interaction, lyrics[0].plainLyrics, searchQuery);
+            return this.sendLyricsEmbed(interaction, lyrics[0].plainLyrics, `${nowPlaying.author} - ${nowPlaying.title}`, nowPlaying.thumbnail);
         }
 
         await interaction.deferReply();
@@ -89,10 +89,14 @@ class LyricsCommand extends BaseSlashCommandInteraction {
         })
     }
 
-    private sendLyricsEmbed(ctx: ChatInputCommandInteraction, lyrics: string, query: string) {
+    private sendLyricsEmbed(ctx: ChatInputCommandInteraction, lyrics: string, query: string, thumbnail?: string) {
         const embed = new EmbedBuilder()
         .setTitle(query)
         .setColor(this.embedOptions.colors.info);
+
+        if(thumbnail) {
+            embed.setThumbnail(thumbnail);
+        }
 
         if(lyrics.length > 4096) lyrics = `${lyrics.substring(0, 4093)}...`;
 
