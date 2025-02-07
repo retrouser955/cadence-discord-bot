@@ -39,7 +39,8 @@ export const createPlayer = async ({ client, executionId }: CreatePlayerParams):
 	*/
 
 	    await player.extractors.register(DeezerExtractor, {
-	        decryptionKey: process.env.DEEZER_KEY
+	        decryptionKey: process.env.DEEZER_KEY,
+            priority: 3
 	    });
 
         await player.extractors.loadMulti(DefaultExtractors);

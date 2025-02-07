@@ -15,7 +15,6 @@ import { transformQuery } from '../../common/validation/searchQueryValidator';
 import { checkInVoiceChannel, checkSameVoiceChannel } from '../../common/validation/voiceChannelValidator';
 import { localizeCommand, useServerTranslator, type Translator } from '../../common/utils/localeUtil';
 import { formatSlashCommand } from '../../common/utils/formattingUtils';
-import { isUrl } from 'discord-player-deezer';
 
 class PlayCommand extends BaseSlashCommandInteraction {
     constructor() {
@@ -88,7 +87,7 @@ class PlayCommand extends BaseSlashCommandInteraction {
         logger.debug(`Searching for track with query: '${transformedQuery}'.`);
         let searchResult: SearchResult | undefined;
         try {
-            searchResult = await player.search(isUrl(transformedQuery) ? transformedQuery : `deezer:${transformedQuery}`, {
+            searchResult = await player.search(transformedQuery, {
                 requestedBy: interaction.user
             });
         } catch (error) {
