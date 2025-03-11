@@ -3,7 +3,7 @@ import { Player } from 'discord-player';
 import { loggerService, type Logger } from '../services/logger';
 import type { CreatePlayerParams } from '../../types/playerTypes';
 // import { YoutubeiExtractor } from 'discord-player-youtubei';
-import { DeezerExtractor } from "discord-player-deezer"
+import { DeezerExtractor, NodeDecryptor } from "discord-player-deezer"
 import { DefaultExtractors } from '@discord-player/extractor';
 export const createPlayer = async ({ client, executionId }: CreatePlayerParams): Promise<Player> => {
     const logger: Logger = loggerService.child({
@@ -41,7 +41,9 @@ export const createPlayer = async ({ client, executionId }: CreatePlayerParams):
 	    await player.extractors.register(DeezerExtractor, {
 	        decryptionKey: process.env.DEEZER_KEY,
             priority: 3,
-            searchLimit: 25
+            searchLimit: 25,
+            arl: process.env.DEEZER_ARL!,
+            decryptor: NodeDecryptor
 	    });
 
         await player.extractors.loadMulti(DefaultExtractors);
