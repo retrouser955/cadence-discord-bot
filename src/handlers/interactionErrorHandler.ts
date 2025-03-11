@@ -3,6 +3,7 @@ import {
     ChatInputCommandInteraction,
     EmbedBuilder,
     type Interaction,
+    InteractionEditReplyOptions,
     type InteractionReplyOptions,
     InteractionType,
     MessageComponentInteraction
@@ -68,7 +69,7 @@ export const handleError = async (
             case false:
                 logger.debug('Responding with error embed');
                 if (interaction.deferred) {
-                    await interaction.editReply(errorReply);
+                    await interaction.editReply(errorReply as InteractionEditReplyOptions);
                 } else {
                     await interaction.reply(errorReply);
                 }
@@ -87,7 +88,7 @@ export const handleError = async (
             case false:
                 logger.debug('Responding with error embed');
                 if (interaction.deferred) {
-                    await interaction.editReply(errorReply);
+                    await interaction.editReply(errorReply as InteractionEditReplyOptions);
                 } else {
                     await interaction.reply(errorReply);
                 }
